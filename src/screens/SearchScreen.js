@@ -1,43 +1,35 @@
-import React, { useState } from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
-import SearchBar from '../components/SearchBar';
-import Yelp from '../api/Yelp';
-
-
+import React, { useState } from "react";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
+import SearchBar from "../components/SearchBar";
+import useResults from "../hooks/useResults";
+import ResultList from "../components/ResultList";
 
 const SearchScreen = () => {
-    const [term, setTerm] = useState('');
-    const [results, setResults] = useState([]);
-    const [errorMessage, setErrorMessage] = useState('');
+  const [term, setTerm] = useState("");
+  const [searchApi, errorMessage, results] = useResults();
 
-    const searchApi = async (searchTerm) => {
-        try { 
-            const response = await Yelp.get('/search', {
-                params: {
-                    limit: 10,
-                    term: searchTerm,
-                    location: 'san jose'
-                }
-            });
-            setResults(response.data.businesses)
-        } catch (err){
-            setErrorMessage('Ooops something went wrong');
-        }      
-    }
+  const filterResultsByPrice = price => {
+    // price === '$' || '$$' || '$$$'
+    return results.filter(result => {
+      return result.price === price;
+    });
+  };
 
-    return (
-        <View>
-            <SearchBar 
-               term={term}
-               onTermChange={setTerm} 
-               onTermSubmit={() => searchApi(term)}
-            />
-            {errorMessage ? <Text>{errorMessage}</Text> : null}
-            <Text>Number of results found: { results.length } </Text>
-            
-        </View>
-    )
-}
+  return (
+    <View>
+      <SearchBar
+        term={term}
+        onTermChange={setTerm}
+        onTermSubmit={() => searchApi(term)}
+      />
+      {errorMessage ? <Text>{errorMessage}</Text> : null}
+      <Text>Number of results found: {results.length} </Text>
+      <ResultList results={filterResultsByPrice("$")} title="Cost Effective" />
+      <ResultList results={filterResultsByPrice("$$")} title="Bit Pricier" />
+      <ResultList results={filterResultsByPrice("$$$")} title="Big Spender" />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({});
 
