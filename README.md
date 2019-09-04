@@ -1,10 +1,10 @@
 # Restaurant-Search-App
-mobile restaurant search application - Using ## React-Native, ## Axios, and ## Yelp api.
-To try the mobile app first download "Expo" app from apple or google play store.
+mobile restaurant search application - Using **React-Native**, **Axios**, and **Yelp api**.
+To try the mobile app first download **"Expo"** app from apple or google play store.
 
 ![alt text](https://github.com/AbrahamTesla/Restaurant-Search-App/blob/master/assets/image/expo%20app.png)
 
-then scan the "QRS code"
+then scan the **"QRS code"**
 
 ![alt text](https://raw.githubusercontent.com/AbrahamTesla/Restaurant-Search-App/master/assets/image/QRS%20code.png)
 
